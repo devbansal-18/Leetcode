@@ -1,31 +1,24 @@
 class Solution {
-    public boolean ispall(String str) {
-        int i=0;
-        int j=str.length()-1;
-        while(i<j) {
-            if(str.charAt(i)!=str.charAt(j)) return false;
-            i++;
-            j--;
+    public int fun(String s,int left,int right) {
+        while(left>=0 && right<s.length() && s.charAt(left)==s.charAt(right)) {
+            left--;
+            right++;
         }
-        return true;
+        return right-left-1;
     }
     public String longestPalindrome(String s) {
-        int n=s.length();
-        if(n==1) return s;
-        String ans="";
-        int maxlen=Integer.MIN_VALUE;
-        for(int i=0;i<n;i++)  {
-            int len=1;
-            for(int j=i+1;j<=n;j++){
-           if(ispall(s.substring(i,j))) {
-            len=j-i+1;
-            if(len>maxlen) {
-                 maxlen=Math.max(maxlen,len);
-                 ans=s.substring(i,j);
-            }
-           }
-            }
-        }
-        return ans;
+       int start=0;
+       int end=0;
+      for(int i=0;i<s.length();i++) {
+        int len1=fun(s,i,i);
+        int len2=fun(s,i,i+1);
+        int len=Math.max(len1,len2);
+
+        if(len>(end-start)) {
+            start=i-(len-1)/2;
+            end=i+len/2;
+        }    
+      }
+      return s.substring(start,end+1);
     }
 }
