@@ -15,7 +15,16 @@ class Solution {
     public boolean isAnagram(String s, String t) {
         if(s.length()!=t.length()) return false;
          HashMap<Character,Integer> mp1=makefreqmap(s);
-         HashMap<Character,Integer> mp2=makefreqmap(t);
-         return mp1.equals(mp2);
+        for(int i=0;i<t.length();i++) {
+            char ch=t.charAt(i);
+            if(!mp1.containsKey(ch)) return false;
+            else {
+                mp1.put(ch,mp1.get(ch)-1);
+            }
+        }
+        for(int i:mp1.values()) {
+            if(i!=0) return false;
+        }
+        return true;
     }
 }
